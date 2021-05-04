@@ -159,6 +159,7 @@ def _index_DELETE(request_data, user_profile):
 @csrf_exempt
 def sns_inbound(request):
     incr_if_enabled('sns_inbound', 1)
+    logger.error('sns_inbound')
     # We can check for some invalid values in headers before processing body
     # Grabs message information for validation
     topic_arn = request.headers.get('X-Amz-Sns-Topic-Arn', None)
@@ -211,6 +212,7 @@ def validate_sns_header(topic_arn, message_type):
 
 
 def _sns_inbound_logic(topic_arn, message_type, json_body):
+    logger.error('_sns_inbound_logic')
     if message_type == 'SubscriptionConfirmation':
         logger.info(
             'SNS SubscriptionConfirmation',
@@ -237,6 +239,7 @@ def _sns_inbound_logic(topic_arn, message_type, json_body):
 
 
 def _sns_notification(json_body):
+    logger.error('_sns_notification')
     message_json = json.loads(json_body['Message'])
     event_type = message_json.get('eventType')
     notification_type = message_json.get('notificationType')
@@ -255,6 +258,7 @@ def _sns_notification(json_body):
 
 
 def _sns_message(message_json):
+    logger.error('_sns_message')
     incr_if_enabled('sns_inbound_Notification_Received', 1)
     mail = message_json['mail']
     if message_json.get('eventType') == 'Bounce':
