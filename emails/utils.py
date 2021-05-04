@@ -133,6 +133,7 @@ def ses_send_raw_email(
 
 def ses_relay_email(from_address, address, subject,
                     message_body, attachments, user_email):
+    logger.error('ses_relay_email')
     formatted_from_address = generate_relay_From(from_address)
     try:
         if attachments:
@@ -155,6 +156,7 @@ def ses_relay_email(from_address, address, subject,
         address.save(
             update_fields=['num_forwarded', 'last_used_at']
         )
+        logger.error(response))
         return response
     except ClientError as e:
         logger.error('ses_client_error', extra=e.response['Error'])
