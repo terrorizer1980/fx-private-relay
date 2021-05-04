@@ -156,7 +156,7 @@ def ses_relay_email(from_address, address, subject,
         address.save(
             update_fields=['num_forwarded', 'last_used_at']
         )
-        logger.error(response))
+        logger.error(response)
         return response
     except ClientError as e:
         logger.error('ses_client_error', extra=e.response['Error'])
