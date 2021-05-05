@@ -401,7 +401,7 @@ def _get_address(to_address, local_portion, domain_portion):
     # if the domain is not the site's 'top' relay domain,
     # it may be for a user's subdomain
     logger.info(
-        '_get_address', {
+        '_get_address', extra={
             'netloc': urlparse(settings.SITE_ORIGIN).netloc,
             'to_address': to_address,
             'local_portion': local_portion,
