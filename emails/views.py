@@ -292,7 +292,8 @@ def _sns_message(message_json):
         # up a bit.
         address = _get_address(to_address, local_portion, domain_portion)
         user_profile = address.user.profile_set.first()
-    except Exception:
+    except Exception as e:
+        logger.error(e)
         return HttpResponse("Address does not exist", status=404)
 
     address_hash = sha256(to_address.encode('utf-8')).hexdigest()
