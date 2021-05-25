@@ -66,9 +66,9 @@ CSP_SCRIPT_SRC = (
 CSP_STYLE_SRC = ("'self'",)
 CSP_IMG_SRC = (
     "'self'",
-    'https://stable.dev.lcip.org/profile/v1',
-    'https://profile.stage.mozaws.net/v1',
-    'https://profile.accounts.firefox.com/v1',
+    'firefoxusercontent.com',
+    'mozillausercontent.com',
+    'stable.dev.lcip.org',
 )
 REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
