@@ -53,6 +53,24 @@ SECURE_BROWSER_XSS_FILTER = config('DJANGO_SECURE_BROWSER_XSS_FILTER', True)
 SESSION_COOKIE_SECURE = config(
     'DJANGO_SESSION_COOKIE_SECURE', False, cast=bool
 )
+# maps fxa profile hosts to respective avatar hosts for CSP
+AVATAR_IMG_SRC_MAP = {
+    'https://stable.dev.lcip.org/profile/v1':      [
+        'stable.dev.lcip.org',
+        'https://stable.dev.lcip.org/profile/v1/avatar/w',
+    ],
+    'https://profile.stage.mozaws.net/v1':      [
+        'mozillausercontent.com',
+        'https://profile.stage.mozaws.net/v1/avatar/w',
+    ],
+    'https://profile.accounts.firefox.com/v1':  [
+        'firefoxusercontent.com',
+        'https://profile.accounts.firefox.com/v1/avatar/w',
+    ],
+}
+AVATAR_IMG_SRC = AVATAR_IMG_SRC_MAP[config(
+    'FXA_PROFILE_ENDPOINT', 'https://profile.accounts.firefox.com/v1'
+)]
 CSP_CONNECT_SRC = (
     "'self'",
     'https://www.google-analytics.com/',
@@ -64,14 +82,8 @@ CSP_SCRIPT_SRC = (
     'https://www.google-analytics.com/',
 )
 CSP_STYLE_SRC = ("'self'",)
-CSP_IMG_SRC = (
-    "'self'",
-    'mozillausercontent.com',
-    'https://profile.stage.mozaws.net/v1/avatar/w',
-    'firefoxusercontent.com',
-    'https://profile.accounts.firefox.com/v1/avatar/w',
-)
-REFERRER_POLICY = 'strict-origin-when-cross-origin'
+CSP_IMG_SRC = ["'self'"] + AVATAR_IMG_SRC
+REFERRER_POLICY = 'strict-origin-when-cross-origin' \
 
 ALLOWED_HOSTS = []
 DJANGO_ALLOWED_HOST = config('DJANGO_ALLOWED_HOST', None)
